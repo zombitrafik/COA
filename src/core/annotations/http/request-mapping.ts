@@ -22,8 +22,6 @@ export function RequestMappingRootAnnotation(expressService: ExpressService, par
         const routesMetadata = Reflect.getOwnMetadata(routesMetadataKey, target.prototype) || [];
         const router = expressService.createRouter();
 
-        console.log(routesMetadata);
-
         routesMetadata.forEach((routeMetadata: any) => {
 
             function requestCallback(req: any, res: any) {

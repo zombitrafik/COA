@@ -7,8 +7,8 @@ class Application {
     }
 
     async run() {
-        await this.getExpressService().listen(3000);
-        await this.getSequelizeService().getDB().sequelize.sync();
+        await this.getExpressService().run();
+        await this.getSequelizeService().run();
     }
 
     getExpressService() {

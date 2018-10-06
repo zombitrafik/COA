@@ -1,16 +1,19 @@
 import Sequelize from 'sequelize';
-import config from '../../config/config'
+import Config from '../../config/config'
 
 import DoctorFactory from '../../models/doctor';
 import DoctorSpecialtyFactory from '../../models/doctor-specialty';
 import {Service} from "../annotations/ioc";
 
+const env = process.env.NODE_ENV || 'development';
+
 @Service()
 export default class SequelizeService {
     private db: any;
     private sequelize: Sequelize.Sequelize;
-    constructor() {
-        const sequelize = new Sequelize(config.db.database, config.db.user, config.db.password, config.db.options);
+    constructor(config: Config) {
+        const dbConfig = config.get(env).db;
+        const sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.password, dbConfig.options);
 
         this.db = {
             sequelize,
@@ -26,5 +29,8 @@ export default class SequelizeService {
     }
     getDB() {
         return this.db;
+    }
+    run() {
+        return this.db.sequelize.sync();
     }
 }

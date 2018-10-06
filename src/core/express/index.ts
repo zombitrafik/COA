@@ -1,12 +1,18 @@
 import express, {ErrorRequestHandler, RequestHandler, Router} from 'express';
 import {Service} from "../annotations/ioc";
+import Config from "../../config/config";
+
+const env = process.env.NODE_ENV || 'development';
 
 //TODO AsyncBean
 
 @Service()
 class ExpressService {
     private app: express.Application;
-    constructor() {
+    private config: Config;
+    constructor(config: Config) {
+        this.config = config;
+
         this.app = express();
     }
     use(path: string, callback: RequestHandler | ErrorRequestHandler) {
@@ -20,7 +26,7 @@ class ExpressService {
     }
 
     run() {
-        return this.app.listen(3000);
+        return this.app.listen(this.config.get(env).port);
     }
 }
 
