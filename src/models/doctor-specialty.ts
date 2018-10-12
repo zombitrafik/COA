@@ -11,7 +11,7 @@ interface DoctorSpecialtyAttributes {
 
 type DoctorSpecialtyInstance = Sequelize.Instance<DoctorSpecialtyAttributes> & DoctorSpecialtyAttributes;
 
-export default (sequelize: Sequelize.Sequelize) => {
+export default function (sequelize: Sequelize.Sequelize) {
     const attributes: SequelizeAttributes<DoctorSpecialtyAttributes> = {
         id: {
             type: Sequelize.INTEGER,

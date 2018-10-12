@@ -15,6 +15,10 @@ export default class BaseRepository {
         return this.model.findById(id, options);
     }
 
+    getAll() {
+        return this.model.findAll();
+    }
+
     update(id: number | string, data: any) {
         return this.model.update(data, {
             where: {
@@ -27,7 +31,7 @@ export default class BaseRepository {
         })
     }
 
-    remove(id: number | string) {
+    delete(id: number | string) {
         return this.model.destroy({
             where: {
                 id: {

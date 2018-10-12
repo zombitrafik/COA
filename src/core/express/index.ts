@@ -1,6 +1,8 @@
 import express, {ErrorRequestHandler, RequestHandler, Router} from 'express';
 import {Service} from "../annotations/ioc";
 import Config from "../../config/config";
+import bodyParser from 'body-parser';
+import expressSession from 'express-session';
 
 const env = process.env.NODE_ENV || 'development';
 
@@ -14,6 +16,16 @@ class ExpressService {
         this.config = config;
 
         this.app = express();
+
+        this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(bodyParser.json());
+
+        this.app.use(expressSession({
+            secret: 'secret',
+            resave: false,
+            saveUninitialized: true,
+            cookie: { }
+        }));
     }
     use(path: string, callback: RequestHandler | ErrorRequestHandler) {
         this.app.use(path, callback);

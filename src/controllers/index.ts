@@ -1,3 +1,5 @@
-import TestController from './test.controller'
+import UserController from './user-controller'
+import DoctorController from './doctor-controller';
+import DoctorSpecialtyController from './doctor-specialty-controller';
 
-export {TestController};
+export {UserController, DoctorController, DoctorSpecialtyController};

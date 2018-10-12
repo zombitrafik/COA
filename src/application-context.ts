@@ -12,6 +12,7 @@ class ApplicationContext {
         require('./core/express');
         require('./repositories');
         require('./controllers');
+        require('./services');
 
         this.container.instantiate();
     }

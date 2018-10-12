@@ -1,8 +1,7 @@
 import Sequelize from 'sequelize';
 import Config from '../../config/config'
 
-import DoctorFactory from '../../models/doctor';
-import DoctorSpecialtyFactory from '../../models/doctor-specialty';
+import models from '../../models';
 import {Service} from "../annotations/ioc";
 
 const env = process.env.NODE_ENV || 'development';
@@ -16,10 +15,12 @@ export default class SequelizeService {
         const sequelize = new Sequelize(dbConfig.database, dbConfig.user, dbConfig.password, dbConfig.options);
 
         this.db = {
-            sequelize,
-            Doctor: DoctorFactory(sequelize),
-            DoctorSpecialty: DoctorSpecialtyFactory(sequelize)
+            sequelize
         };
+
+        Object.keys(models).forEach((modelName: string) => {
+            this.db[modelName] = (<any>models)[modelName](sequelize);
+        });
 
         Object.values(this.db).forEach((model: any) => {
             if (model.associate) {
